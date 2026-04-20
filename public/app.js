@@ -147,6 +147,11 @@ function applyViewMode() {
   if (icon) icon.innerHTML = isGrid ? LIST_SVG : GRID_SVG;
 }
 
+// ── Logo fallback helper ───────────────────────────────────
+function logoFallback(el, letter) {
+  el.parentNode.innerHTML = '<div style="width:100%;height:100%;background:linear-gradient(135deg,#6B3410,#3E1D08);display:flex;align-items:center;justify-content:center;color:#FBF3E4;font-size:22px;font-weight:800;">'+letter+'</div>';
+}
+
 // ── Render: Header ─────────────────────────────────────────
 function renderHeader() {
   var r = menuData.restaurant;
@@ -156,7 +161,7 @@ function renderHeader() {
     : '<span id="cart-badge"></span>';
   var fl = esc((r.name||'م').charAt(0));
   var logo = r.logo_url
-    ? '<img src="'+esc(r.logo_url)+'" alt="'+esc(r.name)+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">'
+    ? '<img src="'+esc(r.logo_url)+'" alt="'+esc(r.name)+'" style="width:100%;height:100%;object-fit:cover;" onerror="logoFallback(this,\''+fl+'\')">'
     : '<div style="width:100%;height:100%;background:linear-gradient(135deg,#6B3410,#3E1D08);display:flex;align-items:center;justify-content:center;color:#FBF3E4;font-size:22px;font-weight:800;">'+fl+'</div>';
   document.getElementById('header-slot').innerHTML =
     '<header style="background:#FBF3E4;padding:20px 16px 12px;">' +
@@ -166,6 +171,23 @@ function renderHeader() {
     '<div style="font-family:\'Playfair Display\',Georgia,serif;font-weight:900;font-size:10px;letter-spacing:.10em;color:#6B3410;text-transform:uppercase;margin-top:3px;">AL TABIKH · SINCE 1973</div></div>' +
     '<button onclick="openCart()" style="position:relative;width:46px;height:46px;border-radius:999px;background:#3E1D08;color:#FBF3E4;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">'+CART_ICON+badge+'</button>' +
     '</div></header>';
+}
+
+// ── Render: Hero ───────────────────────────────────────────
+function renderHero() {
+  var r = menuData.restaurant;
+  var coverStyle = r.cover_image_url
+    ? 'background:linear-gradient(to bottom,rgba(43,27,14,.45),rgba(43,27,14,.85)),url('+esc(r.cover_image_url)+') center/cover no-repeat;'
+    : 'background:linear-gradient(135deg,#3E1D08 0%,#6B3410 60%,#8A5228 100%);';
+  var slogan = r.slogan || r.tagline || 'نكهة عراقية أصيلة منذ 1973';
+  var desc   = r.description || 'تصفّح قائمتنا، أضف ما يعجبك، وأرسل طلبك مباشرةً عبر واتساب.';
+  document.getElementById('hero-slot').innerHTML =
+    '<div style="max-width:440px;margin:0 auto;padding:0 16px 16px;">' +
+    '<div style="border-radius:24px;padding:28px 22px 24px;'+coverStyle+'">' +
+    '<div style="font-size:13px;font-weight:600;color:rgba(251,243,228,.7);margin-bottom:10px;letter-spacing:.04em;">أهلاً بكم</div>' +
+    '<div style="font-weight:800;font-size:26px;color:#FBF3E4;line-height:1.25;margin-bottom:10px;">'+esc(slogan)+'</div>' +
+    '<div style="font-size:14px;color:rgba(251,243,228,.75);line-height:1.6;">'+esc(desc)+'</div>' +
+    '</div></div>';
 }
 
 // ── Render: Category nav ───────────────────────────────────
@@ -574,6 +596,7 @@ function showToast(msg) {
       if(sl) { sl.innerHTML='<img src="'+esc(menuData.restaurant.logo_url)+'" style="width:100%;height:100%;object-fit:cover;">'; sl.style.fontSize='0'; }
     }
     renderHeader();
+    renderHero();
     renderCategoryNav();
     renderMenuItems();
     renderCartFloat();
