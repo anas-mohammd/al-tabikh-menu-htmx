@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>القائمة</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-brown': '#6B3410', 'brand-brown-deep': '#3E1D08',
+            'brand-cream': '#FBF3E4', 'brand-cream-2': '#F5E8CE',
+            'accent-saffron': '#E89B2C', 'ink': '#2B1B0E', 'ink-2': '#6B5A48',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body style="font-family:Rubik,system-ui,sans-serif;background:#FBF3E4;color:#2B1B0E;margin:0;">
+
+<!-- ── Splash ──────────────────────────────────────────── -->
+<div id="splash" style="position:fixed;inset:0;background:#3E1D08;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;">
+  <div id="splash-logo" style="width:90px;height:90px;border-radius:999px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.4);opacity:0;transform:scale(0.8);transition:opacity 0.5s,transform 0.5s;background:#6B3410;display:flex;align-items:center;justify-content:center;color:#FBF3E4;font-size:36px;font-weight:800;">م</div>
+  <div id="splash-name" style="color:#FBF3E4;font-weight:800;font-size:22px;margin-top:20px;opacity:0;transition:opacity 0.5s 0.2s;letter-spacing:.04em;">القائمة</div>
+  <div style="display:flex;gap:8px;margin-top:24px;">
+    <div class="splash-dot" style="animation-delay:0s;"></div>
+    <div class="splash-dot" style="animation-delay:0.2s;"></div>
+    <div class="splash-dot" style="animation-delay:0.4s;"></div>
+  </div>
+</div>
+
+<!-- ── App ────────────────────────────────────────────── -->
+<div id="app" style="display:none;">
+  <div id="header-slot"></div>
+  <div id="cat-nav-slot"></div>
+  <main style="max-width:440px;margin:0 auto;padding:12px 16px 140px;">
+    <div id="menu-items"></div>
+    <div id="review-banner-slot"></div>
+  </main>
+  <div id="cart-float"></div>
+</div>
+
+<!-- ── Item modal ──────────────────────────────────────── -->
+<div id="modal-overlay" onclick="closeModal()" style="display:none;position:fixed;inset:0;background:rgba(43,27,14,.55);z-index:80;backdrop-filter:blur(2px);">
+  <div id="modal-container" onclick="event.stopPropagation()"
+    style="position:absolute;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#FBF3E4;border-radius:28px 28px 0 0;max-height:90vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.2,.8,.2,1);overflow:hidden;"></div>
+</div>
+
+<!-- ── Cart drawer ─────────────────────────────────────── -->
+<div id="cart-overlay" onclick="closeCart()" style="display:none;position:fixed;inset:0;background:rgba(43,27,14,.55);z-index:80;backdrop-filter:blur(2px);">
+  <div id="cart-container" onclick="event.stopPropagation()"
+    style="position:absolute;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#F5E8CE;border-radius:28px 28px 0 0;max-height:92vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.32s cubic-bezier(.2,.8,.2,1);overflow:hidden;">
+    <div id="cart-drawer" style="display:contents;"></div>
+  </div>
+</div>
+
+<!-- ── Review sheet ────────────────────────────────────── -->
+<div id="review-overlay" onclick="closeReview()" style="display:none;position:fixed;inset:0;background:rgba(43,27,14,.55);z-index:80;backdrop-filter:blur(2px);">
+  <div id="review-container" onclick="event.stopPropagation()"
+    style="position:absolute;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:#FBF3E4;border-radius:28px 28px 0 0;max-height:85vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.3s cubic-bezier(.2,.8,.2,1);overflow:hidden;">
+    <div id="review-inner" style="display:contents;"></div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
